@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG" monitorInterval="300">
+    <Appenders>
+        <File name="stdoutlog" fileName="stdout.log" bufferedIO="false" advertiseURI="file://stdout.log" advertise="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="stderrlog" fileName="stderr.log" bufferedIO="false" advertiseURI="file://stderr.log" advertise="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="stdoutlog"/>
+        </Root>
+        <Root level="error">
+            <AppenderRef ref="stderrlog"/>
+        </Root>
+    </Loggers>
+</Configuration>
