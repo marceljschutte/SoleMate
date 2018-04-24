@@ -9,11 +9,11 @@
         </File>
     </Appenders>
     <Loggers>
+        <Logger level="error" >
+            <AppenderRef ref="stderrlog"/>
+        </Logger>
         <Root level="debug">
             <AppenderRef ref="stdoutlog"/>
-        </Root>
-        <Root level="error">
-            <AppenderRef ref="stderrlog"/>
         </Root>
     </Loggers>
 </Configuration>

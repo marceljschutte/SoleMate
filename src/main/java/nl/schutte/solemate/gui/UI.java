@@ -3,14 +3,17 @@
  */
 package nl.schutte.solemate.gui;
 
+import static nl.schutte.solemate.util.PropertyUtil.getProperty;
+
 import java.awt.GridLayout;
 import java.awt.Label;
-import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -18,7 +21,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.basic.BasicLookAndFeel;
-import javax.swing.table.DefaultTableModel;
+
+import nl.schutte.solemate.gui.listeners.AfsluitActionListener;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,6 +36,9 @@ public class UI {
 
     private JFrame mainWindow;
     private JTabbedPane tabbedPane;
+    private JMenu menuBestand, menuBewerken, menuOverzichten, menuHelp;
+    private JMenuBar menuBar;
+    private JMenuItem afsluitenActie;
 
     @PostConstruct
     private void setup() {
@@ -49,10 +57,10 @@ public class UI {
                 mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 mainWindow.setSize(800, 800);
 
-                tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-                tabbedPane.addTab("Dashboard", makePanel("This is tab 1"));
-                tabbedPane.addTab("Tables", makePanel("This is tab 2"));
-                mainWindow.add(tabbedPane);
+                createTabpane();
+
+                createMenu();
+
 
                 log.info("finished constructing: main window");
             });
@@ -60,6 +68,50 @@ public class UI {
             e.printStackTrace();
         }
         log.info("finished constructing: UI");
+    }
+
+    private void createMenu() {
+        menuBar = new JMenuBar();
+
+        addHoofdMenuItems();
+
+
+
+        afsluitenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.afsluiten"));
+
+
+        menuBestand.addSeparator();
+        menuBestand.add(afsluitenActie);
+
+        addActionListeners();
+
+
+
+
+        mainWindow.setJMenuBar(menuBar);
+    }
+
+    private void addHoofdMenuItems() {
+        menuBestand = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.bestand"));
+        menuBewerken = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.bewerken"));
+        menuOverzichten = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.overzichten"));
+        menuHelp = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.help"));
+
+        menuBar.add(menuBestand);
+        menuBar.add(menuBewerken);
+        menuBar.add(menuOverzichten);
+        menuBar.add(menuHelp);
+    }
+
+    private void addActionListeners() {
+        afsluitenActie.addActionListener(new AfsluitActionListener(menuBestand));
+    }
+
+    private void createTabpane() {
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.addTab("Dashboard", makePanel("This is tab 1"));
+        tabbedPane.addTab("Tables", makePanel("This is tab 2"));
+        mainWindow.add(tabbedPane);
     }
 
     public void showMainWindow() {
