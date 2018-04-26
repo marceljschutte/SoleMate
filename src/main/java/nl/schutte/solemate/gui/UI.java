@@ -52,21 +52,8 @@ public class UI {
         try {
             SwingUtilities.invokeAndWait(() -> {
                 log.info("starting constructing: main window");
-                try {
-                    BasicLookAndFeel darcula = new DarculaLaf();
-                    UIManager.setLookAndFeel(darcula);
-                } catch (UnsupportedLookAndFeelException e) {
-                    throw new RuntimeException("Error", e);  //To change body of catch statement use File | Settings | File Templates.
-                }
-
-                mainWindow = new JFrame("Window title");
-                mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                mainWindow.setSize(800, 800);
-
-
-                createMenu();
-
-
+                configureDarculaLookAndFeel();
+                createMainWindow();
                 log.info("finished constructing: main window");
             });
         } catch (Exception e) {
@@ -75,14 +62,28 @@ public class UI {
         log.info("finished constructing: UI");
     }
 
+    private void configureDarculaLookAndFeel() {
+        try {
+            BasicLookAndFeel darcula = new DarculaLaf();
+            UIManager.setLookAndFeel(darcula);
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException("Error", e);  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    private void createMainWindow() {
+        mainWindow = new JFrame(String.format("%s versie %s", getProperty("nl.schutte.solemate.mainwindow.title"), getProperty("nl.schutte.solemate.version")));
+        mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        mainWindow.setSize(800, 800);
+
+        createMenu();
+    }
+
     private void createMenu() {
         menuBar = new JMenuBar();
-
         addHoofdMenuItems();
-
         addActionListeners();
         addMnemonics();
-
         mainWindow.setJMenuBar(menuBar);
     }
 
@@ -100,7 +101,6 @@ public class UI {
 
     private void createMenuHelp() {
         menuHelp = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.help"));
-
         helpItemActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.help.helpitems"));
         aboutActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.help.about"));
         menuHelp.add(helpItemActie);
@@ -118,12 +118,9 @@ public class UI {
 
     private void createMenuBestand() {
         menuBestand = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.bestand"));
-
         importerenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.import"));
         exporterenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.export"));
         afsluitenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.afsluiten"));
-
-
         menuBestand.add(importerenActie);
         menuBestand.add(exporterenActie);
         menuBestand.addSeparator();
