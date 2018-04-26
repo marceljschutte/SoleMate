@@ -7,6 +7,8 @@ import static nl.schutte.solemate.util.PropertyUtil.getProperty;
 
 import java.awt.GridLayout;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -16,14 +18,18 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 
+import nl.schutte.solemate.gui.listeners.AboutActionListener;
 import nl.schutte.solemate.gui.listeners.AfsluitActionListener;
-
+import nl.schutte.solemate.gui.listeners.ExporterenActionListener;
+import nl.schutte.solemate.gui.listeners.HelpItemActionListener;
+import nl.schutte.solemate.gui.listeners.ImporterenActionListener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +44,7 @@ public class UI {
     private JTabbedPane tabbedPane;
     private JMenu menuBestand, menuBewerken, menuOverzichten, menuHelp;
     private JMenuBar menuBar;
-    private JMenuItem afsluitenActie;
+    private JMenuItem importerenActie, exporterenActie, afsluitenActie, helpItemActie, aboutActie;
 
     @PostConstruct
     private void setup() {
@@ -57,7 +63,7 @@ public class UI {
                 mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 mainWindow.setSize(800, 800);
 
-                createTabpane();
+               // createTabpane();
 
                 createMenu();
 
@@ -75,27 +81,17 @@ public class UI {
 
         addHoofdMenuItems();
 
-
-
-        afsluitenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.afsluiten"));
-
-
-        menuBestand.addSeparator();
-        menuBestand.add(afsluitenActie);
-
         addActionListeners();
-
-
-
+        addMnemonics();
 
         mainWindow.setJMenuBar(menuBar);
     }
 
     private void addHoofdMenuItems() {
-        menuBestand = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.bestand"));
-        menuBewerken = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.bewerken"));
-        menuOverzichten = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.overzichten"));
-        menuHelp = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.help"));
+        createMenuBestand();
+        createMenuBewerken();
+        createMenuOverzichten();
+        createMenuHelp();
 
         menuBar.add(menuBestand);
         menuBar.add(menuBewerken);
@@ -103,8 +99,53 @@ public class UI {
         menuBar.add(menuHelp);
     }
 
+    private void createMenuHelp() {
+        menuHelp = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.help"));
+
+        helpItemActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.help.helpitems"));
+        aboutActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.help.about"));
+        menuHelp.add(helpItemActie);
+        menuHelp.addSeparator();
+        menuHelp.add(aboutActie);
+    }
+
+    private void createMenuOverzichten() {
+        menuOverzichten = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.overzichten"));
+    }
+
+    private void createMenuBewerken() {
+        menuBewerken = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.bewerken"));
+    }
+
+    private void createMenuBestand() {
+        menuBestand = new JMenu(getProperty("nl.schutte.solemate.menu.hoofd.bestand"));
+
+        importerenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.import"));
+        exporterenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.export"));
+        afsluitenActie = new JMenuItem(getProperty("nl.schutte.solemate.menu.hoofd.bestand.afsluiten"));
+
+
+        menuBestand.add(importerenActie);
+        menuBestand.add(exporterenActie);
+        menuBestand.addSeparator();
+        menuBestand.add(afsluitenActie);
+    }
+
     private void addActionListeners() {
         afsluitenActie.addActionListener(new AfsluitActionListener(menuBestand));
+        importerenActie.addActionListener(new ImporterenActionListener(menuBestand));
+        exporterenActie.addActionListener(new ExporterenActionListener(menuBestand));
+
+
+        helpItemActie.addActionListener(new HelpItemActionListener(menuBestand));
+        aboutActie.addActionListener(new AboutActionListener(menuBestand));
+    }
+
+    private void addMnemonics() {
+        menuBestand.setMnemonic(KeyEvent.VK_B);
+        menuBewerken.setMnemonic(KeyEvent.VK_W);
+        menuOverzichten.setMnemonic(KeyEvent.VK_O);
+        menuHelp.setMnemonic(KeyEvent.VK_H);
     }
 
     private void createTabpane() {

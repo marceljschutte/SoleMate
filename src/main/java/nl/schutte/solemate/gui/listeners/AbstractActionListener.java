@@ -5,6 +5,9 @@ package nl.schutte.solemate.gui.listeners;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
 /**
  * SoleMate - Description.
  */

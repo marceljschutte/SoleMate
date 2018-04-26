@@ -4,11 +4,10 @@
 package nl.schutte.solemate.gui.listeners;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.invoke.MethodHandles;
 
-import javax.swing.JMenuItem;
-
-import nl.schutte.solemate.gui.UI;
+import javax.swing.JMenu;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,17 +15,18 @@ import org.apache.logging.log4j.Logger;
 /**
  * SoleMate - Description.
  */
-public class AfsluitActionListener extends AbstractActionListener {
+public class AboutActionListener implements ActionListener {
 
     private static final Logger log = LogManager.getLogger(MethodHandles.lookup().lookupClass());
 
-    public AfsluitActionListener(JMenuItem menuItem) {
+    public AboutActionListener(JMenu menuItem) {
         menuItem.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        log.info(e);
-        System.exit(0);
+        // TODO: implement
+        throw new UnsupportedOperationException("TODO: implement method actionPerformed() --> void");
+
     }
 }
