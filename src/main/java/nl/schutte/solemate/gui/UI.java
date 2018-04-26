@@ -63,7 +63,6 @@ public class UI {
                 mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 mainWindow.setSize(800, 800);
 
-               // createTabpane();
 
                 createMenu();
 
@@ -146,13 +145,6 @@ public class UI {
         menuBewerken.setMnemonic(KeyEvent.VK_W);
         menuOverzichten.setMnemonic(KeyEvent.VK_O);
         menuHelp.setMnemonic(KeyEvent.VK_H);
-    }
-
-    private void createTabpane() {
-        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.addTab("Dashboard", makePanel("This is tab 1"));
-        tabbedPane.addTab("Tables", makePanel("This is tab 2"));
-        mainWindow.add(tabbedPane);
     }
 
     public void showMainWindow() {
