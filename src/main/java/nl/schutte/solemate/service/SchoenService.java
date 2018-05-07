@@ -4,6 +4,7 @@
 package nl.schutte.solemate.service;
 
 import java.util.List;
+import java.util.Set;
 
 import nl.schutte.solemate.model.Schoen;
 
@@ -12,7 +13,7 @@ import nl.schutte.solemate.model.Schoen;
  */
 public interface SchoenService {
 
-    public List<Schoen> getAlleSchoen();
+    public Set<Schoen> getAlleSchoenen();
 
     public void saveSchoen();
 

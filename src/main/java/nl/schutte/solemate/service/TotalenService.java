@@ -3,7 +3,11 @@
  */
 package nl.schutte.solemate.service;
 
+import java.time.LocalDate;
 import java.time.Year;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 
 import nl.schutte.solemate.model.Schoen;
 import nl.schutte.solemate.model.TrainingType;
@@ -14,6 +18,10 @@ import nl.schutte.solemate.model.TrainingType;
 public interface TotalenService {
 
     public int berekenTotaalVoorJaar(Year year);
+
+    public SortedMap<Year, Integer> getTotalenPerJaar();
+
+    public SortedMap<Schoen, Integer> getTotalenPerSchoen();
 
     public int berekenTotaalVoorSchoen(Schoen schoen);
 

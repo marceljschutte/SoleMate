@@ -8,23 +8,29 @@ import java.time.Period;
 /**
  * SoleMate - Description.
  */
-public class Schoen {
+public class Schoen implements Comparable {
 
-    private Period periode;
+    private String omschrijving;
+    private Periode periode;
     private SchoenType schoenType;
     private SchoenMerk schoenMerk;
 
-    public Schoen(Period periode, SchoenType schoenType, SchoenMerk schoenMerk) {
+    public Schoen(String omschrijving, Periode periode, SchoenType schoenType, SchoenMerk schoenMerk) {
+        this.omschrijving = omschrijving;
         this.periode = periode;
         this.schoenType = schoenType;
         this.schoenMerk = schoenMerk;
     }
 
-    public Period getPeriode() {
+    private Schoen(){
+
+    }
+
+    public Periode getPeriode() {
         return periode;
     }
 
-    public void setPeriode(Period periode) {
+    public void setPeriode(Periode periode) {
         this.periode = periode;
     }
 
@@ -42,5 +48,16 @@ public class Schoen {
 
     public void setSchoenMerk(SchoenMerk schoenMerk) {
         this.schoenMerk = schoenMerk;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Schoen other = (Schoen) o;
+        return this.periode.getStartDatum().isBefore(((Schoen) o).getPeriode().getStartDatum()) ? 1 : -1;
+    }
+
+    @Override
+    public String toString() {
+        return periode.toString() + " - " + schoenMerk + " " + omschrijving;
     }
 }
