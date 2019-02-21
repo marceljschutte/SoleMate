@@ -6,11 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SoleMate" />
+        <module name="solemate-api" />
+        <module name="solemate-application" />
+        <module name="solemate-library" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SoleMate" target="1.5" />
+      <module name="solemate-api" target="1.5" />
+      <module name="solemate-core" target="1.5" />
+      <module name="solemate-model" target="1.5" />
+      <module name="solemate-springboot" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
