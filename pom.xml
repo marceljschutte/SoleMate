@@ -16,8 +16,10 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>solemate-model</module>
         <module>solemate-library</module>
-        <module>solemate-application</module>
+        <module>solemate-rest-service</module>
+        <module>solemate-jsf-gui</module>
     </modules>
 
     <dependencyManagement>

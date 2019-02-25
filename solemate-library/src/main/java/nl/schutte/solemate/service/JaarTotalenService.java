@@ -26,9 +26,9 @@ public class JaarTotalenService {
     @Autowired
     private ExcelDao excelDao;
 
-    public JaarGegevens getGegevensVanJaar(Year year){
+    public JaarGegevens getGegevensVanJaar(Year year) {
         init();
-        if(year.isAfter(Year.of(Constants.EERSTE_JAAR_HARDLOPEN-1))){
+        if (year.isAfter(Year.of(Constants.EERSTE_JAAR_HARDLOPEN - 1))) {
             return jaarGegevens.get(year);
         } else {
             throw new NoRunningException(String.format("In dit jaar: %s liep ik niet hard", year.getValue()));
@@ -36,18 +36,19 @@ public class JaarTotalenService {
     }
 
     private void init() {
-        if(jaarGegevens.isEmpty()) {
+        if (jaarGegevens.isEmpty()) {
             retrieveData();
             calculateTotals();
         }
     }
 
-    public Map<Year, JaarGegevens> getGegevensVanAlleJaren(){
+    public Map<Year, JaarGegevens> getGegevensVanAlleJaren() {
         init();
         return jaarGegevens;
     }
+
     private void calculateTotals() {
-        for (int i = Constants.EERSTE_JAAR_HARDLOPEN; i <= Year.now().getValue(); i++){
+        for (int i = Constants.EERSTE_JAAR_HARDLOPEN; i <= Year.now().getValue(); i++) {
             List<Training> gefilterdeTrainingen = filterDataForYear(i);
             //hier jaardata aanmaken
             JaarGegevens jaarData = new JaarGegevens();
@@ -64,7 +65,7 @@ public class JaarTotalenService {
     }
 
     private List<Training> filterDataForYear(int year) {
-        return hardloopData.getTrainingLijst().stream()           
+        return hardloopData.getTrainingLijst().stream()
                 .filter(training -> training.getDatum().getYear() == year)
                 .collect(Collectors.toList());
     }
