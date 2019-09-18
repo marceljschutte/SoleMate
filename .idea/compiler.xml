@@ -7,14 +7,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="solemate-api" />
-        <module name="solemate-application" />
+        <module name="solemate-jsf-gui" />
         <module name="solemate-library" />
+        <module name="solemate-model" />
+        <module name="solemate-rest-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="solemate-api" target="1.5" />
       <module name="solemate-core" target="1.5" />
-      <module name="solemate-model" target="1.5" />
       <module name="solemate-springboot" target="1.5" />
     </bytecodeTargetLevel>
   </component>
